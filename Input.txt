@@ -1,0 +1,38 @@
+package com.itcast.demo2;
+
+public class Input implements Runnable {
+	private Resource r;		//声明共享源对象
+	
+	public Input(Resource r) {
+		this.r = r;
+	}
+	
+	
+	public void run() {
+		int i = 0;
+		while (true) {
+			synchronized (r) {		////将共享资源放入同步代码块
+				//判断标记，是true ，就等待
+				if (r.flag) {
+					try {
+						r.wait();
+					} catch (Exception ex) {
+					}
+				}
+
+				if (i % 2 == 0) {
+					r.name = "张三";
+					r.sex = "男";
+				} else {
+					r.name = "lisi";
+					r.sex = "nv";
+				}
+				// 将对方线程唤醒，将标记改为true
+				r.flag=true;
+				r.notify();
+			}
+			i++;
+		}
+	}
+
+}

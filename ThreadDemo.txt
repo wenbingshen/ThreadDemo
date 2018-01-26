@@ -1,0 +1,24 @@
+package com.itcast.demo2;
+
+/*
+ * 	开启输入线程和输出线程,实现赋值和打印值
+ */
+public class ThreadDemo {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		Resource r = new Resource(); //前面两个线程均为实例化对象。
+		//只在主方法中实例对象，保持两个线程拥有同一个对象，
+		//保证资源输入输出正常，避免出现错误
+		
+		Input in = new Input(r);
+		Output out = new Output(r);
+		Thread t0 = new Thread(in);
+		Thread t1 = new Thread(out);
+		t0.start();
+		t1.start();
+		
+		
+	}
+
+}
